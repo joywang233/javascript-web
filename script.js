@@ -42,29 +42,6 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-//implement smooth scroll
-
-// btnScrollTo.addEventListener('click', function (e) {
-//   const s1coords = section1.getBoundingClientRect();
-//   // console.log(s1coords), console.log(e.target.getBoundingClientRect());
-//   // console.log('Current scroll (X/Y)', window.pageXOffset, pageYOffset);
-//   // console.log(
-//   //   'height/width viewport',
-//   //   document.documentElement.clientHeight,
-//   //   document.documentElement.clientWidth
-//   // );
-
-//   //the conventional way of scrolling
-//   // window.scrollTo({
-//   //   left: s1coords.left + window.pageXOffset,
-//   //   top: s1coords.top + window.pageYOffset,
-//   //   behavior: 'smooth',
-//   // });
-
-//   section1.scrollIntoView({ behavior: 'smooth' });
-// });
-
-/////////page navigation
 //implement scrool smoothly with foreach loop
 
 document.querySelectorAll('.nav__link').forEach(el => {
@@ -91,31 +68,6 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 
 const h1 = document.querySelector('h1');
 //console.log(h1.querySelectorAll('.highlight'));
-
-/*
-console.log(h1.childNodes);
-console.log(h1.children); //only works for direct children
-h1.firstElementChild.style.color = 'white';
-h1.lastElementChild.style.color = 'orange';
-
-//going upwards: parents
-console.log(h1.parentNode);
-console.log(h1.parentElement);
-
-h1.closest('.header').style.background = 'var(--gradient-secondary)';
-h1.closest('h1').style.backgroundColor = 'var(--gradient-primary)';
-
-//work with sibling,children elements
-console.log(h1.previousElementSibling);
-console.log(h1.nextElementSibling);
-console.log(h1.previousSibling);
-console.log(h1.nextSibling);
-console.log(h1.parentElement.children);
-[...h1.parentElement.children].forEach(function (el) {
-  if (el !== h1) el.style.tranform = 'scale(0.5)';
-});
-
-*/
 /////////////////////////////////////////////////
 //Tapped components
 
@@ -139,27 +91,6 @@ tabsContsiner.addEventListener('click', e => {
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
 });
-
-//Menu fade animation (don't understand)
-
-// const handleHover = function (e) {
-//   console.log(this, e.currentTarget);
-
-//   if (e.target.classList.contains('nav__link')) {
-//     const link = e.target;
-//     const siblings = link.closest('.nav').querySelectorAll('.nav__link');
-//     const logo = link.closest('.nav').querySelector('.img');
-
-//     siblings.forEach(el => {
-//       if (el !== link) el.style.opacity = this;
-//     });
-//     logo.style.opacity = this;
-//   }
-// };
-
-// //passing argument into handler
-// nav.addEventListener('mouseover', handleHover.bind(0.5));
-// nav.addEventListener('mouseover', handleHover.bind(1));
 
 /////////////////////////////////////////////
 //Implement cookie messages:
@@ -185,31 +116,6 @@ document
 
 ///////////////////////////////////////
 //implement sticky navigation
-//first practice: with scroll but it's a bad practice
-
-// const initialCoords = section1.getBoundingClientRect();
-// console.log(initialCoords);
-// window.addEventListener('scroll', function (e) {
-//   console.log(window.scrollY);
-//   if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
-//   else nav.classList.remove('sticky');
-// });
-
-//Sticky implement with Intersection Observer API
-// const obsCallback = function (entries, observer) {
-//   entries.forEach(entry => {
-//     console.log(entry);
-//   });
-// };
-// const obsOptions = {
-//   root: null,
-//   threshold: [0, 0.2],//how many percent of the target is visible
-// };
-
-// //when observe section 1 innteract with
-
-// const observer = new IntersectionObserver(obsCallback, obsOptions);
-// observer.observe(section1);
 
 //const header = document.querySelector('.header');
 const stickyNav = function (entries) {
@@ -276,54 +182,6 @@ const imgObserver = new IntersectionObserver(loadImg, {
 imgTargets.forEach(img => imgObserver.observe(img));
 
 //implement the slider
-
-// const slides = document.querySelectorAll('.slide');
-// slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i}%)`));
-// let curSlide = 0;
-// const maxSlide = slides.length;
-// //0%, 100%,200%,300%
-
-// // const slider = document.querySelector('.slider');
-// // slider.style.transform = 'scale(0.4) translateX(-1200px)'; // make it smaller that is easy to see
-// // slider.style.overflow = 'visible';
-
-// //select btn
-// const btnLeft = document.querySelector('.slider__btn--left');
-// const btnRight = document.querySelector('.slider__btn--right');
-
-// //go to next slide
-
-// //create a function for this
-
-// const goToSlide = function (slide) {
-//   slides.forEach(
-//     (s, i) => (s.style.transform = `translatX(${100 * (i - curSlide)}%)`)
-//   );
-// };
-// goToSlide(0);
-
-// //next slide
-// const nextSlide = function () {
-//   if (curSlide === maxSlide) {
-//     curSlide = 0;
-//   } else {
-//     curSlide++;
-//   }
-// };
-
-// btnRight.addEventListener('click', nextSlide);
-// //0%, 100%, 200%,300%
-// //curSlide = 1: -100%, 0%, 100%, 200%
-
-// const preSlide = function () {
-//   if (curSlide === 0) {
-//     curSlide = maxSlide - 1;
-//   } else {
-//     curSlide--;
-//     goToSlide(curSlide);
-//   }
-// };
-// btnLeft.addEventListener('click', preSlide);
 const slider = function () {
   const slides = document.querySelectorAll('.slide');
   const btnLeft = document.querySelector('.slider__btn--left');
