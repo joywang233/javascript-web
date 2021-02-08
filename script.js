@@ -248,7 +248,7 @@ const sectionObserver = new IntersectionObserver(revealSection, {
 
 allSections.forEach(function (section) {
   sectionObserver.observe(section);
-  section.classList.add('section--hidden');
+  //section.classList.add('section--hidden');
 });
 
 /////////////////////////implement lazy loading img(good for performance)
@@ -274,45 +274,136 @@ const imgObserver = new IntersectionObserver(loadImg, {
   rootMargin: '200px', //make the img load ealier than user scroll to the position
 });
 imgTargets.forEach(img => imgObserver.observe(img));
-/*
 
-//mouse enter events
-const h1 = document.querySelector('h1');
-// h1.addEventListener('mouseenter', function (e) {
-//   alert('addeventlistenerworks!');
-// });
+//implement the slider
 
-const alertH1 = function (e) {
-  alert('Event listerner works for h1111');
-  h1.removeEventListener('mouseenter', alertH1);
+// const slides = document.querySelectorAll('.slide');
+// slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i}%)`));
+// let curSlide = 0;
+// const maxSlide = slides.length;
+// //0%, 100%,200%,300%
+
+// // const slider = document.querySelector('.slider');
+// // slider.style.transform = 'scale(0.4) translateX(-1200px)'; // make it smaller that is easy to see
+// // slider.style.overflow = 'visible';
+
+// //select btn
+// const btnLeft = document.querySelector('.slider__btn--left');
+// const btnRight = document.querySelector('.slider__btn--right');
+
+// //go to next slide
+
+// //create a function for this
+
+// const goToSlide = function (slide) {
+//   slides.forEach(
+//     (s, i) => (s.style.transform = `translatX(${100 * (i - curSlide)}%)`)
+//   );
+// };
+// goToSlide(0);
+
+// //next slide
+// const nextSlide = function () {
+//   if (curSlide === maxSlide) {
+//     curSlide = 0;
+//   } else {
+//     curSlide++;
+//   }
+// };
+
+// btnRight.addEventListener('click', nextSlide);
+// //0%, 100%, 200%,300%
+// //curSlide = 1: -100%, 0%, 100%, 200%
+
+// const preSlide = function () {
+//   if (curSlide === 0) {
+//     curSlide = maxSlide - 1;
+//   } else {
+//     curSlide--;
+//     goToSlide(curSlide);
+//   }
+// };
+// btnLeft.addEventListener('click', preSlide);
+const slider = function () {
+  const slides = document.querySelectorAll('.slide');
+  const btnLeft = document.querySelector('.slider__btn--left');
+  const btnRight = document.querySelector('.slider__btn--right');
+  const dotContainer = document.querySelector('.dots');
+
+  let curSlide = 0;
+  const maxSlide = slides.length;
+
+  // Functions
+  const createDots = function () {
+    slides.forEach(function (_, i) {
+      dotContainer.insertAdjacentHTML(
+        'beforeend',
+        `<button class="dots__dot" data-slide="${i}"></button>`
+      );
+    });
+  };
+
+  const activateDot = function (slide) {
+    document
+      .querySelectorAll('.dots__dot')
+      .forEach(dot => dot.classList.remove('dots__dot--active'));
+
+    document
+      .querySelector(`.dots__dot[data-slide="${slide}"]`)
+      .classList.add('dots__dot--active');
+  };
+
+  const goToSlide = function (slide) {
+    slides.forEach(
+      (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+    );
+  };
+
+  // Next slide
+  const nextSlide = function () {
+    if (curSlide === maxSlide - 1) {
+      curSlide = 0;
+    } else {
+      curSlide++;
+    }
+
+    goToSlide(curSlide);
+    activateDot(curSlide);
+  };
+
+  const prevSlide = function () {
+    if (curSlide === 0) {
+      curSlide = maxSlide - 1;
+    } else {
+      curSlide--;
+    }
+    goToSlide(curSlide);
+    activateDot(curSlide);
+  };
+
+  const init = function () {
+    goToSlide(0);
+    createDots();
+
+    activateDot(0);
+  };
+  init();
+
+  // Event handlers
+  btnRight.addEventListener('click', nextSlide);
+  btnLeft.addEventListener('click', prevSlide);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') prevSlide();
+    e.key === 'ArrowRight' && nextSlide();
+  });
+
+  dotContainer.addEventListener('click', function (e) {
+    if (e.target.classList.contains('dots__dot')) {
+      const { slide } = e.target.dataset;
+      goToSlide(slide);
+      activateDot(slide);
+    }
+  });
 };
-h1.addEventListener('mouseenter', alertH1);
-
-//remove the eventlistener after 3s
-setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
-
-//event bubbling
-//1.create random color
-
-/*
-//function to create random integers between min and max
-const randomInt = (min, max) =>
-  Math.floor(Math.random() * (max - min + 1) + min);
-
-const randomColor = () =>
-  `rgb(${randomInt(0, 155)},${randomInt(0, 255)},${randomInt(0, 255)})`;
-
-document.querySelector('.nav__link').addEventListener('click', function (e) {
-  this.style.backgroundColor = randomColor();
-});
-
-document.querySelector('.nav__links').addEventListener('click', function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log('Link', e.target);
-  //e.stopPropagation();
-});
-
-document.querySelector('.nav').addEventListener('click', function (e) {
-  //console.log('LINK');
-});
-*/
+slider();
